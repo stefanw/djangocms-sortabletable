@@ -53,6 +53,8 @@ class SortableTable(models.Model):
     def get_header(self, header_row):
         for i, col_name in enumerate(header_row):
             col_settings = self.get_col_settings(i)
+            if col_settings.get('hide'):
+                continue
             yield {
                 'index': i,
                 'name': mark_safe(col_settings.get('name', col_name)),
@@ -82,6 +84,8 @@ class SortableTable(models.Model):
     def get_column(self, row):
         for i, col in enumerate(row):
             col_settings = self.get_col_settings(i)
+            if col_settings.get('hide'):
+                continue
             yield {
                 'value': col,
                 'is_number': not (
