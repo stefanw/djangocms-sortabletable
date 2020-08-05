@@ -16,14 +16,15 @@ var colourColumn = (tbody, col, settings) => {
   let min = Infinity, max = -Infinity;
   let domain = settings.domain;
   let values = [];
-  let t = function(x) {return x;};
+  let t = (x) => x
   if (settings.logscale) {
-    t = function(x) {return Math.LOG10E * Math.log(Math.abs(x)) * Math.sign(x);};
+    t = (x) => Math.LOG10E * Math.log(Math.abs(x)) * Math.sign(x)
   }
   if (domain === undefined) {
     for (i = 0; i < trs.length; i += 1) { // Skip header
       td = trs[i].getElementsByTagName('td')[col];
       val = t(getValue(td));
+      if (isNaN(val)) { continue }
       values.push(val);
       min = Math.min(min, val);
       max = Math.max(max, val);
