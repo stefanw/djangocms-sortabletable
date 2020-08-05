@@ -86,11 +86,13 @@ class SortableTable(models.Model):
             col_settings = self.get_col_settings(i)
             if col_settings.get('hide'):
                 continue
+            is_number = not (
+                col_settings.get('html', False) or
+                col_settings.get('text', False)
+            )
             yield {
-                'value': col,
-                'is_number': not (
-                    col_settings.get('html', False) or
-                    col_settings.get('text', False)),
+                'value': col or 0 if is_number else col,
+                'is_number': is_number,
                 'text': self.get_cell_text(col, col_settings)
             }
 
