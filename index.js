@@ -1,6 +1,29 @@
 const Tablesort = require('tablesort')
 const chroma = require('chroma-js')
- 
+
+const cleanNumber = (i) => i.replace(/[^\-?0-9.]/g, '')
+
+const compareNumber = (a, b) => {
+  a = parseFloat(a);
+  b = parseFloat(b);
+
+  a = isNaN(a) ? 0 : a;
+  b = isNaN(b) ? 0 : b;
+
+  return a - b;
+};
+
+Tablesort.extend('number', function(item) {
+  return item.match(/^[-+]?[£\x24Û¢´€]?\d+\s*([,\.]\d{0,2})/) || // Prefixed currency
+    item.match(/^[-+]?\d+\s*([,\.]\d{0,2})?[£\x24Û¢´€]/) || // Suffixed currency
+    item.match(/^[-+]?(\d)*-?([,\.]){0,1}-?(\d)+([E,e][\-+][\d]+)?%?$/); // Number
+}, function(a, b) {
+  a = cleanNumber(a);
+  b = cleanNumber(b);
+
+  return compareNumber(b, a);
+});
+
 
 const defaultCellColor = '#333';
 const whiteCellColor = '#fff';
@@ -54,9 +77,14 @@ const sortableTable = (table, settings) => {
   let tbody = table.getElementsByTagName('tbody')[0];
   settings.scale = settings.scale || 'OrRd';
   let columns = settings.columns;
+  let columnIndex = -1
   for (let i = 0; i < columns.length; i += 1) {
+    if (columns[i].hide) {
+      continue
+    }
+    columnIndex += 1
     if (!columns[i].text && !columns[i].html) {
-      colourColumn(tbody, i, {
+      colourColumn(tbody, columnIndex, {
         scale: columns[i].scale || settings.scale,
         domain: columns[i].domain,
         midpoint: columns[i].midpoint,
