@@ -99,9 +99,9 @@
 }
 
 .sortable-table td.numbers {
+  white-space: nowrap;
   text-align: right;
-  font-feature-settings: "lnum";
-  font-variant-numeric: lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
 }
 
 .sortable-table__container {
