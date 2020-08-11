@@ -111,7 +111,10 @@ class SortableTable(models.Model):
             if 'precision' in col_settings:
                 value = round(value, col_settings['precision'])
             if col_settings.get('number_word'):
-                formatted_value = intword(value)
+                if value < 0:
+                    formatted_value = '-{}'.format(intword(-value))
+                else:
+                    formatted_value = intword(value)
             elif col_settings.get('number_format', True):
                 formatted_value = number_format(
                     value,
