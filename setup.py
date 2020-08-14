@@ -25,7 +25,7 @@ def find_version(*file_paths):
 setup(
     name="sortabletable",
     version=find_version('sortabletable/__init__.py'),
-    url='https://github.org/stefanw/sortabletable',
+    url='https://github.org/stefanw/djangocms-sortabletable',
     license='MIT',
     description="Sortable Table Django CMS Plugin",
     long_description=read('README.md'),
