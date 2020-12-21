@@ -5,7 +5,6 @@ from django.db import models
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from django.utils.formats import number_format
-from django.contrib.postgres.fields import JSONField
 from django.contrib.humanize.templatetags.humanize import intword
 
 try:
@@ -18,7 +17,7 @@ class SortableTable(models.Model):
     title = models.CharField(_('title'), max_length=255)
 
     csv_data = models.TextField(_('CSV data'))
-    settings = JSONField(_('settings'), default=dict, blank=True)
+    settings = models.JSONField(_('settings'), default=dict, blank=True)
 
     class Meta:
         abstract = True

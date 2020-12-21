@@ -33,8 +33,8 @@ setup(
     author_email='stefan.wehrmeyer@okfn.de',
     packages=find_packages(),
     install_requires=[
-        'Django',
-        'django-cms',
+        'Django>=3.1',
+        'django-cms>=3.8',
     ],
     include_package_data=True,
     classifiers=[
