@@ -83,7 +83,7 @@ const sortableTable = (table, settings) => {
       continue
     }
     columnIndex += 1
-    if (!columns[i].text && !columns[i].html) {
+    if (!columns[i].text && !columns[i].html && !columns[i].no_colour) {
       colourColumn(tbody, columnIndex, {
         scale: columns[i].scale || settings.scale,
         domain: columns[i].domain,
